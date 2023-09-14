@@ -18,7 +18,7 @@ module dds (
     input  wire        pselect,
     input  wire [1:0]  register_mode,
     input  wire [7:0]  register_gain,
-    input  wire [7:0]  register_offset,
+    input  wire signed [7:0]  register_offset,
 
     // DDS Output
     output reg [7:0]   dds_output
@@ -60,7 +60,7 @@ module dds (
     // Sin Read Only Memory /////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
 
-    reg [7:0] sine_data;
+    reg signed  [7:0] sine_data;
 
     reg [7:0] sine_memory [0:255];
     initial begin
@@ -77,31 +77,52 @@ module dds (
     // Gain & Offset Stage //////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
 
-    reg [15:0] sine_data_post_gain;
-    wire sine_data_post_gain_trunc = sine_data_post_gain[15:8];
-    //reg [8:0] sine_data_post_offset;
+    reg signed [15:0] sine_data_post_gain;
+    wire signed [7:0] sine_data_post_gain2 = sine_data_post_gain[15:8];
+    reg signed [8:0] sine_data_post_offset;
+    reg signed [7:0] sine_data_post_offset_satured;
+    reg saturating;
 
+    // Gain and offset
     always @(posedge clk) begin
         sine_data_post_gain   <= register_gain * sine_data;
-        //sine_data_post_offset <= sine_data_post_gain[15:8] + register_offset;
+        sine_data_post_offset <= sine_data_post_gain2 + register_offset;
     end
 
+    // Saturation
+    always @(posedge clk) begin
+        if (rst_n == 0) begin
+            saturating <= 0;
+        end
+        else begin
 
-/*
-    register_gain
-    /1
-    /2
-    /4
-    /8
-    ?
-    register_offset
-    TODO
-*/
-wire [7:0] pn_random;
+            // Saturation on the maximum value : +127
+            if (sine_data_post_offset > 127) begin
+                sine_data_post_offset_satured = 127;
+                saturating = 1;
+            end
+
+            // Saturation on the minimum value : -128
+            else if (sine_data_post_offset < -128) begin
+                sine_data_post_offset_satured = -128;
+                saturating = 1;
+            end
+
+            // No saturation : we can safely copy the data
+            else begin
+                sine_data_post_offset_satured = sine_data_post_offset[7:0];
+                saturating = 0;
+            end
+
+        end
+    end
 
     /////////////////////////////////////////////////////////////////////////////
     // Mux output data //////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
+
+    // TODO : implement a basic pseudo random number generator => PRBS ?
+    wire [7:0] pn_random;
 
     // We select the data to ouput with the register_mode
     //
@@ -112,7 +133,7 @@ wire [7:0] pn_random;
     //  - "11" = Pseudorandom Number
     always @(*) begin
         if (register_mode == 0)
-            dds_output <= sine_data_post_gain_trunc;
+            dds_output <= sine_data_post_offset_satured;
         else if (register_mode == 1)
             dds_output <= phase_accumulator_trunc;
         else if (register_mode == 1)
