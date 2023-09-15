@@ -118,11 +118,25 @@ module dds (
     end
 
     /////////////////////////////////////////////////////////////////////////////
+    // Pseudorandom Number Generator (PRNG) /////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+    
+    wire [7:0] prng_data;
+
+    prng inst_prng (
+
+        // Clock and reset
+        .clk(clk),
+        .rst_n(rst_n),
+
+        // Output
+        .prng_data(prng_data)
+
+    );
+
+    /////////////////////////////////////////////////////////////////////////////
     // Mux output data //////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-
-    // TODO : implement a basic pseudo random number generator => PRBS ?
-    wire [7:0] pn_random;
 
     // We select the data to ouput with the register_mode
     //
@@ -139,7 +153,7 @@ module dds (
         else if (register_mode == 1)
             dds_output <= sine_data[7];
         else
-            dds_output <= pn_random;
+            dds_output <= prng_data;
     end
 
 endmodule
