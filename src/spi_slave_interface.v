@@ -61,11 +61,8 @@ module spi_slave_interface (
                 // They are similar to an address
                 case (shift_register[31:28])
                     
-                    4'b0000 : begin
+                    4'b0000 :
                         register_mode   <= shift_register[1:0];
-                        register_gain   <= shift_register[3:2];
-                        register_offset <= shift_register[3:2];
-                    end
 
                     4'b0001 :
                         register_freq0 <= shift_register[27:0];
@@ -78,6 +75,12 @@ module spi_slave_interface (
 
                     4'b0100 :
                         register_phase1 <= shift_register[11:0];
+                    
+                    4'b0101 :
+                        register_gain   <= shift_register[7:0];
+                    
+                    4'b0110 :
+                        register_offset <= shift_register[7:0];
 
                 endcase
 
