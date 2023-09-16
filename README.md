@@ -24,9 +24,9 @@ TODO : explain how this DDS works
 
 ## SPI Slave Interface
 
-![alt text](./spi_interface.png)
+This design also contains a SPI Slave Interface. This interface is used to configure the various registers of the design. It is a write-only interface since it doesn't have a MISO signal. It supports only 32b access. The most significant bit is transmitted first on the MOSI signal. The address of the register is on the bits [31:28]. This design samples the SPI_MOSI signal on the rising edge of the SPI_CLK signal.
 
-This design also contains a SPI Slave Interface. This interface is used to configure the various registers of the design. It is a write-only interface since it doesn't have a MISO signal. It supports only 32b access. The most significant bit is transmitted first on the MOSI signal. The address of the register is on the bits [31:28].
+<img src="./spi_interface.png" width="687" height="305">
 
 | Address           | Register Name | Register content                                          |
 | :---------------: |:-------------:| :---------------------------------------------------------|
