@@ -26,11 +26,13 @@ TODO : explain how this DDS works
 
 TODO : explain here how to configure the component and describe the registers
 
-| Address           | Register Name | Register content |
-| :---------------: |:-------------:| :---------------:|
-| 4'h0              | CONTROL       | XXXXXXXXXXXXXXXX |
-| 4'h1              | REG_FREQ0     | XXXXXXXXXXXXXXXX |
-| 4'h2              | REG_FREQ1     | XXXXXXXXXXXXXXXX |
-| 4'h3              | REG_PHASE0    | XXXXXXXXXXXXXXXX |
-| 4'h4              | REG_PHASE1    | XXXXXXXXXXXXXXXX |
-| Others            | No registers  | ---------------  |
+| Address           | Register Name | Register content                                          |
+| :---------------: |:-------------:| :---------------------------------------------------------|
+| 4'h0              | CONTROL       | [1:0] Output mode (00=sinus; 01=ramp; 10=square; 11=prng) |
+| 4'h1              | REG_FREQ0     | [27:0] Frequency word 0                                   |
+| 4'h2              | REG_FREQ1     | [27:0] Frequency word 1                                   |
+| 4'h3              | REG_PHASE0    | [11:0] Phase Offset word 0                                |
+| 4'h4              | REG_PHASE1    | [11:0] Phase Offset word 1                                |
+| 4'h5              | REG_GAIN      | [11:0] Gain of the sinus output                           |
+| 4'h6              | REG_OFFSET    | [11:0] Offset of the sinus output                         |
+| Others            | No registers  | Not used                                                  |
