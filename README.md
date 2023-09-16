@@ -18,6 +18,10 @@ The idea is to send this module to TinyTapeout..
 
 TODO : show LUT + FF usage
 
+| LUT       | FF            |
+| :-------: |:-------------:|
+| XXXXXXXX  | XXXXXXXX      |
+
 ## DDS
 
 TODO : explain how this DDS works
