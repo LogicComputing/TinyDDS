@@ -13,3 +13,15 @@ The idea is to send this module to TinyTapeout..
   - dds_top.v
     - dds.v
       - prng.v
+
+## Ressource usage
+
+TODO : show LUT + FF usage
+
+## DDS
+
+TODO : explain how this DDS works
+
+## SPI Slave Interface
+
+TODO : explain here how to configure the component and describe the registers
