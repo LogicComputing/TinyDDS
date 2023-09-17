@@ -1,10 +1,8 @@
 # basic_dds
 
-![alt text](./schematic.png)
+<img src="./schematic.png" width="700" height="268">
 
-Work in progress : basic Direct digital synthesis module in Verilog
-
-The idea is to send this module to TinyTapeout..
+This repository contains a Direct Digital Synthesis module in Verilog. It can generate sinus, ramp, square and prng data. I want to use this design on Tiny Tapeout TT05. This README contains some explanation about the design and how to use it. The code is quite simple.
 
 ## Hierarchy
 
