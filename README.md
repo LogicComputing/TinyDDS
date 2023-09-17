@@ -39,6 +39,13 @@ This design also contains a SPI Slave Interface. This interface is used to confi
 | 4'h2              | REG_FREQ1     | [27:0] Frequency word 1                                   |
 | 4'h3              | REG_PHASE0    | [11:0] Phase Offset word 0                                |
 | 4'h4              | REG_PHASE1    | [11:0] Phase Offset word 1                                |
-| 4'h5              | REG_GAIN      | [11:0] Gain of the sinus output                           |
-| 4'h6              | REG_OFFSET    | [11:0] Offset of the sinus output                         |
+| 4'h5              | REG_GAIN      | [7:0] Gain of the sinus output                            |
+| 4'h6              | REG_OFFSET    | [7:0] Offset of the sinus output                          |
 | Others            | No registers  | Not used                                                  |
+
+## Interesting links
+
+- [Analog Devices - Ask The Application Engineer—33: All About Direct Digital Synthesis](https://www.analog.com/en/analog-dialogue/articles/all-about-direct-digital-synthesis.html)
+- [Analog Devices - A Technical Tutorial on Digital Signal Synthesis, 1999](https://www.analog.com/en/education/education-library/technical-tutorial-dds.html)
+- [Analog Devices - MT-085 Fundamentals of Direct Digital Synthesis (DDS)](https://www.analog.com/media/en/training-seminars/tutorials/MT-085.pdf)
+- [Analog Devices - AD9833, 12.65 mW, 2.3 V to 5.5 V, Low Power Programmable Waveform Generator](https://www.analog.com/media/en/technical-documentation/data-sheets/ad9833.pdf)
