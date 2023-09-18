@@ -4,25 +4,25 @@
 
 This repository contains a Direct Digital Synthesis module in Verilog. It can generate sinus, ramp, square and prng data. I want to use this design on Tiny Tapeout TT05. This README contains some explanation about the design and how to use it. The code is quite simple.
 
+As usual, we first generate a phase ramp. The slope of this ramp defines the frequency of the output. After this ramp, we translate this phase to a sinus value. In this design, I use a small read-only memory. I added a gain, offset and saturation. After that, the output of the design is muxed between multiple data.
+
 ## Hierarchy
 
 - tt_um_basic_dds.v
-  - spi_slave_interface.v
+  - inputs_resync.v
   - dds_top.v
+    - spi_slave_interface.v
     - dds.v
       - prng.v
 
 ## Ressource usage
 
-TODO : show LUT + FF usage
+| LUT       | FF            | Block Memory bits | DSP Block            |
+| :-------: |:-------------:|:-----------------:|:--------------------:|
+| ~110      | ~200          | 1                 | 1                    |
 
-| LUT       | FF            |
-| :-------: |:-------------:|
-| XXXXXXXX  | XXXXXXXX      |
-
-## DDS
-
-TODO : explain how this DDS works
+**Target** :  Cyclone V<br>
+**Fmax**   : 140 MHz
 
 ## SPI Slave Interface
 
