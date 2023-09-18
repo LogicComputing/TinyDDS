@@ -15,19 +15,52 @@ module tt_um_basic_dds #( parameter MAX_COUNT = 10_000_000 ) (
 );
 
     /////////////////////////////////////////////////////////////////////////////
+    // SYNCHRONIZING INPUTS /////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+
+    wire [7:0] ui_in_clk;
+    wire async_rstn = ena && rst_n;
+    wire rst_n_clk;
+    wire rst_clk = !rst_n_clk;
+
+    // Synchronize rst_n
+    sync_async_reset inst_sync_async_reset (
+        .clock(clk),
+        .reset_n(async_rstn),
+        .rst_n(rst_n_clk)
+    );
+
+    // Synchronize ui_in
+    synchronizer #(
+        .Width(8), 
+        .Stages(2),         //number of shift registers
+        .Init(0),           //if nonzero, initialize each register to InitValue
+        .InitValue(0)       //initial & reset value
+    ) sync_0 (
+        .clk(clk),          //in: output clock
+        .reset(rst_clk),    //in: active high reset
+        .in(ui_in),         //in [Width]: data in
+        .out(ui_in_clk)     //out [Width]: data out, delayed by Stages clk cycles
+    );
+
+    /////////////////////////////////////////////////////////////////////////////
     // Wires ////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
 
-    wire spi_clock        = ui_in[0];
-    wire spi_cs_n         = ui_in[1];
-    wire spi_mosi         = ui_in[2];
-        
-    wire fselect          = ui_in[3];
-    wire pselect          = ui_in[4];
+    // SPI Interface
+    wire spi_clock        = ui_in_clk[0];
+    wire spi_cs_n         = ui_in_clk[1];
+    wire spi_mosi         = ui_in_clk[2];
+    
+    // Frequency Select and Phase Select
+    wire fselect          = ui_in_clk[3];
+    wire pselect          = ui_in_clk[4];
 
+    // Output
     wire [7:0] dds_output;
     assign uo_out         = dds_output;
     
+    // Unused
     assign uio_oe         = "00000000";
     assign uio_out        = "00000000";
 
@@ -39,7 +72,7 @@ module tt_um_basic_dds #( parameter MAX_COUNT = 10_000_000 ) (
         
         // Clock and reset
         .clk(clk),
-        .rst_n(rst_n),
+        .rst_n(rst_n_clk),
 
         // SPI Interface
         .spi_clock(spi_clock),
