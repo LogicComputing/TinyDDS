@@ -9,7 +9,8 @@ As usual, we first generate a phase ramp. The slope of this ramp defines the fre
 ## Hierarchy
 
 - tt_um_basic_dds.v
-  - inputs_resync.v
+  - sync_async_reset.v
+  - synchronizer.v
   - dds_top.v
     - spi_slave_interface.v
     - dds.v
