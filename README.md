@@ -42,6 +42,10 @@ This design also contains a SPI Slave Interface. This interface is used to confi
 | 4'h6              | REG_OFFSET    | [7:0] Offset of the sinus output                          |
 | Others            | No registers  | Not used                                                  |
 
+## Waves
+
+<img src="./ramp_to_sine_data.png" width="700" height="268">
+
 ## Interesting links
 
 - [Analog Devices - Ask The Application Engineer—33: All About Direct Digital Synthesis](https://www.analog.com/en/analog-dialogue/articles/all-about-direct-digital-synthesis.html)
