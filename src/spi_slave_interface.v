@@ -38,7 +38,7 @@ module spi_slave_interface (
             register_phase0     <= 0;
             register_phase1     <= 0;
             register_mode       <= 0;
-            register_gain       <= 0;
+            register_gain       <= 8'hFF;
             register_offset     <= 0;
         end
         else begin
