@@ -1,4 +1,4 @@
-# basic_dds
+# TinyDDS
 
 <img src="./schematic.png" width="700" height="268">
 
@@ -8,7 +8,7 @@ As usual, we first generate a phase ramp. The slope of this ramp defines the fre
 
 ## Hierarchy
 
-- tt_um_basic_dds.v
+- tt_um_tinydds.v
   - sync_async_reset.v
   - synchronizer.v
   - dds_top.v
