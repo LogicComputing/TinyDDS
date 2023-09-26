@@ -83,7 +83,7 @@ begin
     -- # Device Under Test ###########################
     -- ###############################################
 
-    inst_tt_um_basic_dds : entity work.tt_um_basic_dds
+    inst_tt_um_tinydds : entity work.tt_um_tinydds
     port map (
         ui_in   => ui_in,   -- input  wire [7:0] ui_in,    // Dedicated inputs
         uo_out  => uo_out,  -- output wire [7:0] uo_out,   // Dedicated outputs
